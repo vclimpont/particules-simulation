@@ -351,15 +351,15 @@ MonoBehaviour:
   k: 1
   k_Near: 1
   p0: 1
-  alpha: 10
+  alpha: 5
   beta: 0.2
   dTime: 0.1
   sizeX:
-  - -10
-  - 10
-  sizeY:
   - -7
   - 7
+  sizeY:
+  - -5
+  - 5
 --- !u!114 &1952496402
 MonoBehaviour:
   m_ObjectHideFlags: 0
