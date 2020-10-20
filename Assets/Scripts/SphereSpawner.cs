@@ -6,23 +6,23 @@ using UnityEngine.Assertions;
 public class SphereSpawner : MonoBehaviour
 {
     [Header("Spheres settings")]
-    [SerializeField] GameObject spherePrefab;
-    [SerializeField] int nbSpheres;
-    [SerializeField] Vector3 maxInitVelocity;
-    [SerializeField] float massMin;
-    [SerializeField] float massMax;
-    [SerializeField] float foutside;
-    [SerializeField] float h;
-    [SerializeField] float k;
-    [SerializeField] float k_Near;
-    [SerializeField] float p0;
-    [SerializeField] float alpha;
-    [SerializeField] float beta;
-    [SerializeField] float dTime;
+    [SerializeField] GameObject spherePrefab = null;
+    [SerializeField] int nbSpheres = 0;
+    [SerializeField] Vector3 maxInitVelocity = Vector3.zero;
+    [SerializeField] float massMin = 0;
+    [SerializeField] float massMax = 0;
+    [SerializeField] float fOutside = 0;
+    [SerializeField] float h = 0;
+    [SerializeField] float k = 0;
+    [SerializeField] float k_Near = 0;
+    [SerializeField] float p0 = 0;
+    [SerializeField] float alpha = 0;
+    [SerializeField] float beta = 0;
+    [SerializeField] float dTime = 0;
 
     [Header("Boundaries")]
-    [SerializeField] float[] sizeX;
-    [SerializeField] float[] sizeY;
+    [SerializeField] float[] sizeX = null;
+    [SerializeField] float[] sizeY = null;
 
 
     private List<FluidBehaviour> particles;
@@ -58,7 +58,7 @@ public class SphereSpawner : MonoBehaviour
             sphereGO.GetComponent<MeshRenderer>().material.color = c;
 
             FluidBehaviour particle = sphereGO.GetComponent<FluidBehaviour>();
-            particle.Initialize(new Vector3(vx, vy, 0), m, foutside, h, k, k_Near, p0, alpha, beta, dTime, sizeX, sizeY[0]);
+            particle.Initialize(new Vector3(vx, vy, 0), m, fOutside, h, k, k_Near, p0, alpha, beta, dTime, sizeX, sizeY[0]);
             particles.Add(particle);
         }
     }

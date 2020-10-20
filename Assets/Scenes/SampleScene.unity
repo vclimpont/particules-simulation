@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 1952496400}
   - component: {fileID: 1952496401}
   - component: {fileID: 1952496402}
+  - component: {fileID: 1952496403}
   m_Layer: 0
   m_Name: SphereSpawner
   m_TagString: Untagged
@@ -343,10 +344,10 @@ MonoBehaviour:
   spherePrefab: {fileID: 2611568392269609383, guid: 9b295cfa51347d949a364f5c71d23f32,
     type: 3}
   nbSpheres: 500
-  maxInitVelocity: {x: 0, y: 0, z: 0}
+  maxInitVelocity: {x: 1.5, y: 3, z: 0}
   massMin: 1
   massMax: 4
-  foutside: 75
+  fOutside: 75
   h: 1.5
   k: 1
   k_Near: 1
@@ -370,5 +371,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521dc2ec48e094549b95515fb0bef8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1952496403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952496399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c21ea197ce0c449bf5b478ad7ddc39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
