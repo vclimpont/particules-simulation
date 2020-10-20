@@ -53,9 +53,10 @@ public class SphereSpawner : MonoBehaviour
             Color c = Color.Lerp(Color.blue, Color.red, m / (massMin + massMax));
 
             GameObject sphereGO = Instantiate(spherePrefab, new Vector3(x, y, 0), Quaternion.identity);
-            sphereGO.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+            //sphereGO.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
             sphereGO.transform.parent = transform;
-            sphereGO.GetComponent<MeshRenderer>().material.color = c;
+            //sphereGO.GetComponent<MeshRenderer>().material.color = c;
+            sphereGO.GetComponent<SpriteRenderer>().color = c;
 
             FluidBehaviour particle = sphereGO.GetComponent<FluidBehaviour>();
             particle.Initialize(new Vector3(vx, vy, 0), m, fOutside, h, k, k_Near, p0, alpha, beta, dTime, sizeX, sizeY[0]);
