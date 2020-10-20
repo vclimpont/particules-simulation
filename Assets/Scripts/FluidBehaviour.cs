@@ -9,6 +9,7 @@ public class FluidBehaviour : MonoBehaviour
 
     private Vector3 G = new Vector3(0, -9.81f, 0);
     private Vector3 prevPosition;
+    private float foutside;
     private float h;
     private float k;
     private float kNear;
@@ -19,10 +20,11 @@ public class FluidBehaviour : MonoBehaviour
     private float[] boundX;
     private float boundY;
 
-    public void Initialize(Vector3 initVelocity, float mass, float h, float k, float kNear, float p0, float alpha, float beta, float dTime, float[] boundX, float boundY)
+    public void Initialize(Vector3 initVelocity, float mass, float foutside, float h, float k, float kNear, float p0, float alpha, float beta, float dTime, float[] boundX, float boundY)
     {
         Velocity = initVelocity;
         Mass = mass;
+        this.foutside = foutside;
         this.h = h;
         this.k = k;
         this.kNear = kNear;
@@ -112,22 +114,25 @@ public class FluidBehaviour : MonoBehaviour
 
     public void ClampVelocity()
     {
+        float dtm = (dTime * dTime) / Mass;
+        Vector3 dir = Vector3.zero;
+
         if(transform.position.y <= boundY)
         {
-            float y = boundY + (0.2f * (boundY - transform.position.y));
-            transform.position = new Vector3(transform.position.x, y, transform.position.z);
+            dir = (new Vector3(transform.position.x, boundY, transform.position.z) - transform.position).normalized;
+            transform.position += (dtm * (foutside * Vector3.Distance(new Vector3(transform.position.x, boundY, transform.position.z), transform.position)) * dir);
         }
 
         if (transform.position.x <= boundX[0])
         {
-            float x = boundX[0] + (0.2f * (boundX[0] - transform.position.x));
-            transform.position = new Vector3(x, transform.position.y , transform.position.z);
+            dir = (new Vector3(boundX[0], transform.position.y, transform.position.z) - transform.position).normalized;
+            transform.position += (dtm * (foutside * Vector3.Distance(new Vector3(boundX[0], transform.position.y, transform.position.z), transform.position)) * dir);
         }
 
         if (transform.position.x >= boundX[1])
         {
-            float x = boundX[1] - (0.2f * (transform.position.x - boundX[1]));
-            transform.position = new Vector3(x, transform.position.y, transform.position.z);
+            dir = (new Vector3(boundX[1], transform.position.y, transform.position.z) - transform.position).normalized;
+            transform.position += (dtm * (foutside * Vector3.Distance(new Vector3(boundX[1], transform.position.y, transform.position.z), transform.position)) * dir);
         }
     }
 }

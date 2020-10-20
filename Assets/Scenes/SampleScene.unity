@@ -342,20 +342,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 2611568392269609383, guid: 9b295cfa51347d949a364f5c71d23f32,
     type: 3}
-  nbSpheres: 800
+  nbSpheres: 500
   maxInitVelocity: {x: 0, y: 0, z: 0}
   massMin: 1
   massMax: 4
+  foutside: 75
   h: 1.5
   k: 1
   k_Near: 1
   p0: 1
-  alpha: 0
-  beta: 0
+  alpha: 10
+  beta: 0.2
   dTime: 0.1
   sizeX:
-  - -15
-  - 15
+  - -10
+  - 10
   sizeY:
   - -7
   - 7

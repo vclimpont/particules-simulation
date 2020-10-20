@@ -31,7 +31,7 @@ public class FluidSimulator : MonoBehaviour
             particle.ApplyViscosity();
         }
 
-            foreach (FluidBehaviour particle in particles)
+        foreach (FluidBehaviour particle in particles)
         {
             particle.UpdatePosition();
         }

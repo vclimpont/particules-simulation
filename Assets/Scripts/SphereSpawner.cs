@@ -11,6 +11,7 @@ public class SphereSpawner : MonoBehaviour
     [SerializeField] Vector3 maxInitVelocity;
     [SerializeField] float massMin;
     [SerializeField] float massMax;
+    [SerializeField] float foutside;
     [SerializeField] float h;
     [SerializeField] float k;
     [SerializeField] float k_Near;
@@ -57,7 +58,7 @@ public class SphereSpawner : MonoBehaviour
             sphereGO.GetComponent<MeshRenderer>().material.color = c;
 
             FluidBehaviour particle = sphereGO.GetComponent<FluidBehaviour>();
-            particle.Initialize(new Vector3(vx, vy, 0), m, h, k, k_Near, p0, alpha, beta, dTime, sizeX, sizeY[0]);
+            particle.Initialize(new Vector3(vx, vy, 0), m, foutside, h, k, k_Near, p0, alpha, beta, dTime, sizeX, sizeY[0]);
             particles.Add(particle);
         }
     }
