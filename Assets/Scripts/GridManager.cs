@@ -24,8 +24,7 @@ public class GridManager
         {
             for (int j = -1; j <= 1; j++)
             {
-                Vector3 kSqrPos = new Vector3(squarePos.x + i, squarePos.y + j, 0);
-                if(dicGridParticles.TryGetValue(kSqrPos, out List<GameObject> particles))
+                if(dicGridParticles.TryGetValue(new Vector3(squarePos.x + i, squarePos.y + j, 0), out List<GameObject> particles))
                 {
                     neighbours.AddRange(particles);
                 }
@@ -54,8 +53,6 @@ public class GridManager
                 dicGridParticles.Add(squarePos, partAtKey);
             }
         }
-
-        Debug.Log(dicGridParticles.Count);
     }
 
     public void ClearDictionary()

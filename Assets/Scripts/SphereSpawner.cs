@@ -43,10 +43,10 @@ public class SphereSpawner : MonoBehaviour
 
         for (int i = 0; i < nbSpheres; i++)
         {
-            float x = Random.Range(sizeX[0], sizeX[1]);
+            float x = Random.Range(-7, -5);
             float y = Random.Range(sizeY[1], sizeY[1]);
 
-            float vx = Random.Range(-maxInitVelocity.x, maxInitVelocity.x);
+            float vx = Random.Range(0, maxInitVelocity.x);
             float vy = Random.Range(0, maxInitVelocity.y);
 
             float m = Random.Range(massMin, massMax);

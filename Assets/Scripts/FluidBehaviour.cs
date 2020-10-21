@@ -38,42 +38,41 @@ public class FluidBehaviour : MonoBehaviour
 
     public void DoubleDensityRelaxation(List<GameObject> neighbours)
     {
-        float p = 0;
-        float pNear = 0;
+        //float p = 0;
+        //float pNear = 0;
 
-        Vector3 crtPos = transform.position;
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(crtPos, h, LayerMask.GetMask("Sphere"));
+        //Vector3 crtPos = transform.position;
 
-        foreach (Collider2D coll in hitColliders)
-        {
-            float q = Vector3.Distance(crtPos, coll.transform.position) / h;
-            if (q < 1)
-            {
-                p += Mathf.Pow((1 - q), 2);
-                pNear += Mathf.Pow((1 - q), 3);
-            }
-        }
+        //foreach (GameObject partGO in neighbours)
+        //{
+        //    float q = Vector3.Distance(crtPos, partGO.transform.position) / h;
+        //    if (q < 1)
+        //    {
+        //        p += Mathf.Pow((1 - q), 2);
+        //        pNear += Mathf.Pow((1 - q), 3);
+        //    }
+        //}
 
-        float P = k * (p - p0);
-        float PNear = kNear * pNear;
-        Vector3 dx = Vector3.zero;
+        //float P = k * (p - p0);
+        //float PNear = kNear * pNear;
+        //Vector3 dx = Vector3.zero;
 
-        foreach (Collider2D coll in hitColliders)
-        {
-            Vector3 collPos = coll.transform.position;
-            float q = Vector3.Distance(crtPos, collPos) / h;
-            if (q < 1)
-            {
-                Vector3 rij = (collPos - crtPos).normalized;
-                Vector3 D = (dTime * dTime) / Mass * (P * (1 - q) + PNear * Mathf.Pow((1 - q), 2)) * rij;
-                collPos += (D / 2);
-                dx -= (D / 2);
+        //foreach (GameObject partGO in neighbours)
+        //{
+        //    Vector3 collPos = partGO.transform.position;
+        //    float q = Vector3.Distance(crtPos, collPos) / h;
+        //    if (q < 1)
+        //    {
+        //        Vector3 rij = (collPos - crtPos).normalized;
+        //        Vector3 D = (dTime * dTime) / Mass * (P * (1 - q) + PNear * Mathf.Pow((1 - q), 2)) * rij;
+        //        collPos += (D / 2);
+        //        dx -= (D / 2);
 
-                coll.transform.position = collPos;
-            }
-        }
+        //        partGO.transform.position = collPos;
+        //    }
+        //}
 
-        transform.position += dx;
+        //transform.position += dx;
     }
 
     public void ApplyViscosity(List<GameObject> neighbours)

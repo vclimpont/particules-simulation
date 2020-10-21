@@ -30,21 +30,23 @@ public class FluidSimulator : MonoBehaviour
             particle.ApplyGravity();
         }
 
-        foreach (FluidBehaviour particle in particles)
-        {
-            Vector3 partPos = particle.transform.position;
-            Vector3 squarePos = new Vector3(Mathf.Floor(partPos.x), Mathf.Floor(partPos.y), 0);
-            particle.ApplyViscosity(gm.GetNeighboursOfParticle(squarePos));
-        }
+        //foreach (FluidBehaviour particle in particles)
+        //{
+        //    Vector3 partPos = particle.transform.position;
+        //    Vector3 squarePos = new Vector3(Mathf.Floor(partPos.x), Mathf.Floor(partPos.y), 0);
+        //    particle.ApplyViscosity(gm.GetNeighboursOfParticle(squarePos));
+        //}
 
         foreach (FluidBehaviour particle in particles)
         {
             particle.UpdatePosition();
         }
 
-        foreach(FluidBehaviour particle in particles)
+        foreach (FluidBehaviour particle in particles)
         {
-            particle.DoubleDensityRelaxation();
+            Vector3 partPos = particle.transform.position;
+            Vector3 squarePos = new Vector3(Mathf.Floor(partPos.x), Mathf.Floor(partPos.y), 0);
+            particle.DoubleDensityRelaxation(gm.GetNeighboursOfParticle(squarePos));
         }
 
         foreach (FluidBehaviour particle in particles)
