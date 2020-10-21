@@ -17,6 +17,24 @@ public class GridManager
         return particles;
     }
 
+    public List<GameObject> GetNeighboursOfParticle(Vector3 squarePos)
+    {
+        List<GameObject> neighbours = new List<GameObject>();
+        for(int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                Vector3 kSqrPos = new Vector3(squarePos.x + i, squarePos.y + j, 0);
+                if(dicGridParticles.TryGetValue(kSqrPos, out List<GameObject> particles))
+                {
+                    neighbours.AddRange(particles);
+                }
+            }
+        }
+
+        return neighbours;
+    }
+
     public void AddToDictionary(List<FluidBehaviour> particles)
     {
         foreach (FluidBehaviour particle in particles)
@@ -36,6 +54,8 @@ public class GridManager
                 dicGridParticles.Add(squarePos, partAtKey);
             }
         }
+
+        Debug.Log(dicGridParticles.Count);
     }
 
     public void ClearDictionary()

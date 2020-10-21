@@ -36,7 +36,7 @@ public class FluidBehaviour : MonoBehaviour
         this.boundY = boundY;
     }
 
-    public void DoubleDensityRelaxation()
+    public void DoubleDensityRelaxation(List<GameObject> neighbours)
     {
         float p = 0;
         float pNear = 0;
@@ -76,19 +76,24 @@ public class FluidBehaviour : MonoBehaviour
         transform.position += dx;
     }
 
-    public void ApplyViscosity()
+    public void ApplyViscosity(List<GameObject> neighbours)
     {
         Vector3 crtPos = transform.position;
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(crtPos, h, LayerMask.GetMask("Sphere"));
 
-        foreach (Collider2D coll in hitColliders)
+        foreach (GameObject partGO in neighbours)
         {
-            Vector3 collPos = coll.transform.position;
-            float q = Vector3.Distance(crtPos, collPos) / h;
+            if (partGO == this)
+            {
+                continue;
+            }
+
+            //Debug.Log(transform.position + " " + neighbours.Count);
+            Vector3 neighbourPos = partGO.transform.position;
+            float q = Vector3.Distance(crtPos, neighbourPos) / h;
             if (q < 1)
             {
-                FluidBehaviour pj = coll.GetComponent<FluidBehaviour>();
-                Vector3 rij = (collPos - crtPos).normalized;
+                FluidBehaviour pj = partGO.GetComponent<FluidBehaviour>();
+                Vector3 rij = (neighbourPos - crtPos).normalized;
                 float u = Vector3.Dot((Velocity - pj.Velocity), rij);
 
                 if (u > 0)

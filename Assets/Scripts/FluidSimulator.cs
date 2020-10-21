@@ -32,7 +32,9 @@ public class FluidSimulator : MonoBehaviour
 
         foreach (FluidBehaviour particle in particles)
         {
-            particle.ApplyViscosity();
+            Vector3 partPos = particle.transform.position;
+            Vector3 squarePos = new Vector3(Mathf.Floor(partPos.x), Mathf.Floor(partPos.y), 0);
+            particle.ApplyViscosity(gm.GetNeighboursOfParticle(squarePos));
         }
 
         foreach (FluidBehaviour particle in particles)
