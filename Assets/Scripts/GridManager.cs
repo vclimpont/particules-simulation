@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class GridManager
 {
-    private Dictionary<Vector3, List<GameObject>> dicGridParticles;
+    public Dictionary<Vector3, List<GameObject>> DicGridParticles { get; private set; }
 
     public GridManager()
     {
-        dicGridParticles = new Dictionary<Vector3, List<GameObject>>();
+        DicGridParticles = new Dictionary<Vector3, List<GameObject>>();
     }
 
     public List<GameObject> GetParticlesInGrid(Vector3 squarePos)
     {
-        dicGridParticles.TryGetValue(squarePos, out List<GameObject> particles);
+        DicGridParticles.TryGetValue(squarePos, out List<GameObject> particles);
         return particles;
     }
 
@@ -24,7 +24,7 @@ public class GridManager
         {
             for (int j = -1; j <= 1; j++)
             {
-                if(dicGridParticles.TryGetValue(new Vector3(squarePos.x + i, squarePos.y + j, 0), out List<GameObject> particles))
+                if(DicGridParticles.TryGetValue(new Vector3(squarePos.x + i, squarePos.y + j, 0), out List<GameObject> particles))
                 {
                     neighbours.AddRange(particles);
                 }
@@ -41,23 +41,23 @@ public class GridManager
             Vector3 pos = particle.transform.position;
             Vector3 squarePos = new Vector3(Mathf.Floor(pos.x), Mathf.Floor(pos.y), 0);
 
-            if (dicGridParticles.TryGetValue(squarePos, out List<GameObject> partAtKey))
+            if (DicGridParticles.TryGetValue(squarePos, out List<GameObject> partAtKey))
             {
                 partAtKey.Add(particle.gameObject);
-                dicGridParticles[squarePos] = partAtKey;
+                DicGridParticles[squarePos] = partAtKey;
             }
             else
             {
                 partAtKey = new List<GameObject>();
                 partAtKey.Add(particle.gameObject);
-                dicGridParticles.Add(squarePos, partAtKey);
+                DicGridParticles.Add(squarePos, partAtKey);
             }
         }
     }
 
     public void ClearDictionary()
     {
-        dicGridParticles.Clear();
+        DicGridParticles.Clear();
     }
 
     // return true if the rectangle and circle are colliding
