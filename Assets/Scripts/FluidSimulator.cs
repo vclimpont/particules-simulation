@@ -6,11 +6,13 @@ public class FluidSimulator : MonoBehaviour
 {
     private float dTime;
     private List<FluidBehaviour> particles;
+    private GridManager gm;
 
     public void Initialize(float dTime, List<FluidBehaviour> particles)
     {
         this.dTime = dTime;
         this.particles = particles;
+        gm = new GridManager();
     }
 
     // Start is called before the first frame update
@@ -21,6 +23,8 @@ public class FluidSimulator : MonoBehaviour
 
     void UpdatePhysics()
     {
+        gm.AddToDictionary(particles);
+
         foreach(FluidBehaviour particle in particles)
         {
             particle.ApplyGravity();
@@ -50,5 +54,7 @@ public class FluidSimulator : MonoBehaviour
         {
             particle.ComputeNextVelocity();
         }
+
+        gm.ClearDictionary();
     }
 }

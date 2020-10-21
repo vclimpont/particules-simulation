@@ -2,13 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridManager
 {
+    private Dictionary<Vector3, List<GameObject>> dicGridParticles;
 
-    // Start is called before the first frame update
-    void Start()
+    public GridManager()
     {
+        dicGridParticles = new Dictionary<Vector3, List<GameObject>>();
+    }
 
+    public List<GameObject> GetParticlesInGrid(Vector3 squarePos)
+    {
+        dicGridParticles.TryGetValue(squarePos, out List<GameObject> particles);
+        return particles;
+    }
+
+    public void AddToDictionary(List<FluidBehaviour> particles)
+    {
+        foreach (FluidBehaviour particle in particles)
+        {
+            Vector3 pos = particle.transform.position;
+            Vector3 squarePos = new Vector3(Mathf.Floor(pos.x), Mathf.Floor(pos.y), 0);
+
+            if (dicGridParticles.TryGetValue(squarePos, out List<GameObject> partAtKey))
+            {
+                partAtKey.Add(particle.gameObject);
+                dicGridParticles[squarePos] = partAtKey;
+            }
+            else
+            {
+                partAtKey = new List<GameObject>();
+                partAtKey.Add(particle.gameObject);
+                dicGridParticles.Add(squarePos, partAtKey);
+            }
+        }
+    }
+
+    public void ClearDictionary()
+    {
+        dicGridParticles.Clear();
     }
 
     // return true if the rectangle and circle are colliding
