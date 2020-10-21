@@ -21,6 +21,11 @@ public class FluidSimulator : MonoBehaviour
         InvokeRepeating("UpdatePhysics", 0, dTime);
     }
 
+    void Update()
+    {
+
+    }
+
     void UpdatePhysics()
     {
         gm.AddToDictionary(particles);

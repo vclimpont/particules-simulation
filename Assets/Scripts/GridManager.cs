@@ -1,14 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GridManager
 {
-    public Dictionary<Vector3, List<GameObject>> DicGridParticles { get; private set; }
+    internal Dictionary<Vector3, List<GameObject>> DicGridParticles { get; private set; }
 
     public GridManager()
     {
         DicGridParticles = new Dictionary<Vector3, List<GameObject>>();
+        
     }
 
     public List<GameObject> GetParticlesInGrid(Vector3 squarePos)
@@ -57,7 +59,7 @@ public class GridManager
 
     public void ClearDictionary()
     {
-        DicGridParticles.Clear();
+        DicGridParticles = new Dictionary<Vector3, List<GameObject>>();
     }
 
     // return true if the rectangle and circle are colliding

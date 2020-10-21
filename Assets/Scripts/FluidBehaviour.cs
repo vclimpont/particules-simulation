@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FluidBehaviour : MonoBehaviour
 {
-    public Vector3 Velocity { get; set; }
-    public float Mass { get; private set; }
+    internal Vector3 Velocity { get; set; }
+    internal float Mass { get; private set; }
 
     private Vector3 G = new Vector3(0, -9.81f, 0);
     private Vector3 prevPosition;
@@ -38,41 +38,41 @@ public class FluidBehaviour : MonoBehaviour
 
     public void DoubleDensityRelaxation(List<GameObject> neighbours)
     {
-        //float p = 0;
-        //float pNear = 0;
+        float p = 0;
+        float pNear = 0;
 
-        //Vector3 crtPos = transform.position;
+        Vector3 crtPos = transform.position;
 
-        //foreach (GameObject partGO in neighbours)
-        //{
-        //    float q = Vector3.Distance(crtPos, partGO.transform.position) / h;
-        //    if (q < 1)
-        //    {
-        //        p += Mathf.Pow((1 - q), 2);
-        //        pNear += Mathf.Pow((1 - q), 3);
-        //    }
-        //}
+        foreach (GameObject partGO in neighbours)
+        {
+            float q = Vector3.Distance(crtPos, partGO.transform.position) / h;
+            if (q < 1)
+            {
+                p += Mathf.Pow((1 - q), 2);
+                pNear += Mathf.Pow((1 - q), 3);
+            }
+        }
 
-        //float P = k * (p - p0);
-        //float PNear = kNear * pNear;
-        //Vector3 dx = Vector3.zero;
+        float P = k * (p - p0);
+        float PNear = kNear * pNear;
+        Vector3 dx = Vector3.zero;
 
-        //foreach (GameObject partGO in neighbours)
-        //{
-        //    Vector3 collPos = partGO.transform.position;
-        //    float q = Vector3.Distance(crtPos, collPos) / h;
-        //    if (q < 1)
-        //    {
-        //        Vector3 rij = (collPos - crtPos).normalized;
-        //        Vector3 D = (dTime * dTime) / Mass * (P * (1 - q) + PNear * Mathf.Pow((1 - q), 2)) * rij;
-        //        collPos += (D / 2);
-        //        dx -= (D / 2);
+        foreach (GameObject partGO in neighbours)
+        {
+            Vector3 collPos = partGO.transform.position;
+            float q = Vector3.Distance(crtPos, collPos) / h;
+            if (q < 1)
+            {
+                Vector3 rij = (collPos - crtPos).normalized;
+                Vector3 D = (dTime * dTime) / Mass * (P * (1 - q) + PNear * Mathf.Pow((1 - q), 2)) * rij;
+                collPos += (D / 2);
+                dx -= (D / 2);
 
-        //        partGO.transform.position = collPos;
-        //    }
-        //}
+                partGO.transform.position = collPos;
+            }
+        }
 
-        //transform.position += dx;
+        transform.position += dx;
     }
 
     public void ApplyViscosity(List<GameObject> neighbours)
