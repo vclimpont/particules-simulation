@@ -48,8 +48,8 @@ public class FluidBehaviour : MonoBehaviour
             float q = Vector3.Distance(crtPos, partGO.transform.position) / h;
             if (q < 1)
             {
-                p += Mathf.Pow((1 - q), 2);
-                pNear += Mathf.Pow((1 - q), 3);
+                p += ((1 - q) * (1 - q));
+                pNear += ((1 - q) * (1 - q) * (1 - q));
             }
         }
 
@@ -63,8 +63,8 @@ public class FluidBehaviour : MonoBehaviour
             float q = Vector3.Distance(crtPos, collPos) / h;
             if (q < 1)
             {
-                Vector3 rij = (collPos - crtPos).normalized;
-                Vector3 D = (dTime * dTime) / Mass * (P * (1 - q) + PNear * Mathf.Pow((1 - q), 2)) * rij;
+                Vector3 rij = Vector3.Normalize(collPos - crtPos);
+                Vector3 D = (dTime * dTime) / Mass * (P * (1 - q) + PNear * (1 - q) * (1 - q)) * rij;
                 collPos += (D / 2);
                 dx -= (D / 2);
 
@@ -86,18 +86,17 @@ public class FluidBehaviour : MonoBehaviour
                 continue;
             }
 
-            //Debug.Log(transform.position + " " + neighbours.Count);
             Vector3 neighbourPos = partGO.transform.position;
             float q = Vector3.Distance(crtPos, neighbourPos) / h;
             if (q < 1)
             {
                 FluidBehaviour pj = partGO.GetComponent<FluidBehaviour>();
-                Vector3 rij = (neighbourPos - crtPos).normalized;
+                Vector3 rij = Vector3.Normalize(neighbourPos - crtPos);
                 float u = Vector3.Dot((Velocity - pj.Velocity), rij);
 
                 if (u > 0)
                 {
-                    Vector3 I = dTime * (1 - q) * ((alpha * u) + (beta * Mathf.Pow(u, 2))) * rij;
+                    Vector3 I = dTime * (1 - q) * ((alpha * u) + (beta * u * u)) * rij;
                     Velocity -= (I / 2);
                     pj.Velocity += (I / 2);
                 }
@@ -129,19 +128,19 @@ public class FluidBehaviour : MonoBehaviour
 
         if(crtPos.y <= boundY)
         {
-            dir = (new Vector3(crtPos.x, boundY, crtPos.z) - crtPos).normalized;
+            dir = Vector3.Normalize(new Vector3(crtPos.x, boundY, crtPos.z) - crtPos);
             crtPos += (dtm * (foutside * Vector3.Distance(new Vector3(crtPos.x, boundY, crtPos.z), crtPos)) * dir);
         }
 
         if (crtPos.x <= boundX[0])
         {
-            dir = (new Vector3(boundX[0], crtPos.y, crtPos.z) - crtPos).normalized;
+            dir = Vector3.Normalize(new Vector3(boundX[0], crtPos.y, crtPos.z) - crtPos);
             crtPos += (dtm * (foutside * Vector3.Distance(new Vector3(boundX[0], crtPos.y, crtPos.z), crtPos)) * dir);
         }
 
         if (crtPos.x >= boundX[1])
         {
-            dir = (new Vector3(boundX[1], crtPos.y, crtPos.z) - crtPos).normalized;
+            dir = Vector3.Normalize(new Vector3(boundX[1], crtPos.y, crtPos.z) - crtPos);
             crtPos += (dtm * (foutside * Vector3.Distance(new Vector3(boundX[1], crtPos.y, crtPos.z), crtPos)) * dir);
         }
 
