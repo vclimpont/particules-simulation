@@ -18,12 +18,7 @@ public class FluidSimulator : MonoBehaviour
     // Start is called before the first frame update
     public void StartSimulating()
     {
-        InvokeRepeating("UpdatePhysics", 0, dTime);
-    }
-
-    void Update()
-    {
-
+        InvokeRepeating(nameof(UpdatePhysics), 0, dTime);
     }
 
     void UpdatePhysics()
@@ -35,12 +30,12 @@ public class FluidSimulator : MonoBehaviour
             particle.ApplyGravity();
         }
 
-        //foreach (FluidBehaviour particle in particles)
-        //{
-        //    Vector3 partPos = particle.transform.position;
-        //    Vector3 squarePos = new Vector3(Mathf.Floor(partPos.x), Mathf.Floor(partPos.y), 0);
-        //    particle.ApplyViscosity(gm.GetNeighboursOfParticle(squarePos));
-        //}
+        foreach (FluidBehaviour particle in particles)
+        {
+            Vector3 partPos = particle.transform.position;
+            Vector3 squarePos = new Vector3(gm.RoundTo(partPos.x, particle.GetH()), gm.RoundTo(partPos.y, particle.GetH()), 0);
+            particle.ApplyViscosity(gm.GetNeighboursOfParticle(squarePos, particle.GetH()));
+        }
 
         foreach (FluidBehaviour particle in particles)
         {
@@ -50,8 +45,8 @@ public class FluidSimulator : MonoBehaviour
         foreach (FluidBehaviour particle in particles)
         {
             Vector3 partPos = particle.transform.position;
-            Vector3 squarePos = new Vector3(Mathf.Floor(partPos.x), Mathf.Floor(partPos.y), 0);
-            particle.DoubleDensityRelaxation(gm.GetNeighboursOfParticle(squarePos));
+            Vector3 squarePos = new Vector3(gm.RoundTo(partPos.x, particle.GetH()), gm.RoundTo(partPos.y, particle.GetH()), 0);
+            particle.DoubleDensityRelaxation(gm.GetNeighboursOfParticle(squarePos, particle.GetH()));
         }
 
         foreach (FluidBehaviour particle in particles)

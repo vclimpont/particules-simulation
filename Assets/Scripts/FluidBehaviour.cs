@@ -147,4 +147,9 @@ public class FluidBehaviour : MonoBehaviour
 
         transform.position = crtPos;
     }
+    
+    public float GetH()
+    {
+        return h;
+    }
 }

@@ -353,7 +353,7 @@ MonoBehaviour:
   p0: 1
   alpha: 5
   beta: 0.2
-  dTime: 0.05
+  dTime: 0.1
   sizeX:
   - -7
   - 7

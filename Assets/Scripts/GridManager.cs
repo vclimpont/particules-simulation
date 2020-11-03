@@ -9,8 +9,7 @@ public class GridManager
 
     public GridManager()
     {
-        DicGridParticles = new Dictionary<Vector3, List<GameObject>>();
-        
+        DicGridParticles = new Dictionary<Vector3, List<GameObject>>();   
     }
 
     public List<GameObject> GetParticlesInGrid(Vector3 squarePos)
@@ -19,12 +18,12 @@ public class GridManager
         return particles;
     }
 
-    public List<GameObject> GetNeighboursOfParticle(Vector3 squarePos)
+    public List<GameObject> GetNeighboursOfParticle(Vector3 squarePos, float h)
     {
         List<GameObject> neighbours = new List<GameObject>();
-        for(int i = -1; i <= 1; i++)
+        for(float i = -h; i <= h; i += h)
         {
-            for (int j = -1; j <= 1; j++)
+            for (float j = -h; j <= h; j += h)
             {
                 if(DicGridParticles.TryGetValue(new Vector3(squarePos.x + i, squarePos.y + j, 0), out List<GameObject> particles))
                 {
@@ -41,7 +40,7 @@ public class GridManager
         foreach (FluidBehaviour particle in particles)
         {
             Vector3 pos = particle.transform.position;
-            Vector3 squarePos = new Vector3(Mathf.Floor(pos.x), Mathf.Floor(pos.y), 0);
+            Vector3 squarePos = new Vector3(RoundTo(pos.x, particle.GetH()), RoundTo(pos.y, particle.GetH()), 0);
 
             if (DicGridParticles.TryGetValue(squarePos, out List<GameObject> partAtKey))
             {
@@ -62,32 +61,37 @@ public class GridManager
         DicGridParticles = new Dictionary<Vector3, List<GameObject>>();
     }
 
-    // return true if the rectangle and circle are colliding
-    bool RectCircleColliding(Vector3 cPos, float cR, Vector3 sPos, float sSize)
+    public float RoundTo(float value, float multipleOf)
     {
-        float distX = Mathf.Abs(cPos.x - sPos.x - sSize / 2);
-        float distY = Mathf.Abs(cPos.y - sPos.y - sSize / 2);
-
-        if (distX > (sSize / 2 + cR)) 
-        { 
-            return false; 
-        }
-        if (distY > (sSize / 2 + cR)) 
-        { 
-            return false; 
-        }
-
-        if (distX <= (sSize / 2)) 
-        { 
-            return true; 
-        }
-        if (distY <= (sSize / 2)) 
-        { 
-            return true; 
-        }
-
-        float dx = distX - sSize / 2;
-        float dy = distY - sSize / 2;
-        return (dx * dx + dy * dy <= (cR * cR));
+        return Mathf.Round(value / multipleOf) * multipleOf;
     }
+
+    // return true if the rectangle and circle are colliding
+    //bool RectCircleColliding(Vector3 cPos, float cR, Vector3 sPos, float sSize)
+    //{
+    //    float distX = Mathf.Abs(cPos.x - sPos.x - sSize / 2);
+    //    float distY = Mathf.Abs(cPos.y - sPos.y - sSize / 2);
+
+    //    if (distX > (sSize / 2 + cR)) 
+    //    { 
+    //        return false; 
+    //    }
+    //    if (distY > (sSize / 2 + cR)) 
+    //    { 
+    //        return false; 
+    //    }
+
+    //    if (distX <= (sSize / 2)) 
+    //    { 
+    //        return true; 
+    //    }
+    //    if (distY <= (sSize / 2)) 
+    //    { 
+    //        return true; 
+    //    }
+
+    //    float dx = distX - sSize / 2;
+    //    float dy = distY - sSize / 2;
+    //    return (dx * dx + dy * dy <= (cR * cR));
+    //}
 }
