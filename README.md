@@ -12,3 +12,6 @@ The rules of physics also take into account the mass of each particle. (the colo
 
 To increase the performances of the system, a particle does not consider every other particles as neighbors. Instead, every particles are placed in a virtual infinite grid generated at runtime. Particles only consider neighboring particles based on their position in the grid. Thus, the time complexity of the system is (almost) linear instead of quadratic.
 
+![simulation](https://github.com/vclimpont/particules-simulation/blob/main/Images/simulation.gif)
+
+![final state](https://github.com/vclimpont/particules-simulation/blob/main/Images/massState.PNG)
