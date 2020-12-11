@@ -15,3 +15,7 @@ To increase the performances of the system, a particle does not consider every o
 ![simulation](https://github.com/vclimpont/particules-simulation/blob/main/Images/simulation.gif)
 
 ![final state](https://github.com/vclimpont/particules-simulation/blob/main/Images/massState.PNG)
+
+## Source
+
+Particle-based Viscoelastic Fluid Simulation : http://www.ligum.umontreal.ca/Clavet-2005-PVFS/pvfs.pdf
